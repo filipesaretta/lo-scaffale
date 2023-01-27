@@ -1,6 +1,10 @@
-import { useReducer } from 'react'
+import { FormEvent, useEffect, useReducer } from 'react'
 
-export function AddNewBook() {
+interface setStateProps {
+  setIsModalOpen: (value: boolean) => void
+}
+
+export function AddNewBook({ setIsModalOpen }: setStateProps) {
   // const [title, setTitle] = useState('')
   // const [author, setAuthor] = useState('')
   // const [rating, setRating] = useState('')
@@ -12,51 +16,32 @@ export function AddNewBook() {
     { title: '', author: '', rating: '' },
   )
 
-  function addBook(e) {
+  function addBook(e: FormEvent) {
     e.preventDefault()
-    console.log(newBook)
+    // console.log(newBook)
+    setIsModalOpen(false)
   }
 
+  useEffect(() => {
+    function handleKeyPress(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        setIsModalOpen(false)
+      }
+    }
+    document.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [setIsModalOpen])
+
   return (
-    <div className="max-w-md flex flex-col bg-lavender-blue-800 rounded-md pt-4">
-      <h2 className="font-medium text-2xl text-center">Aggiungi nuovo libro</h2>
-      <form
-        onSubmit={addBook}
-        className="flex flex-col mb-0 p-4 max-w-md space-y-4"
-      >
-        <label htmlFor="name" className="sr-only">
-          Titulo
-        </label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Titolo"
-          className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-          value={newBook.title}
-          onChange={(e) =>
-            setNewBook({
-              title: e.target.value,
-            })
-          }
-        />
-        <label htmlFor="author" className="sr-only">
-          Autore
-        </label>
-        <input
-          type="text"
-          id="author"
-          placeholder="Autore"
-          className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-          value={newBook.author}
-          onChange={(e) =>
-            setNewBook({
-              author: e.target.value,
-            })
-          }
-        />
-        <label htmlFor="rating" className="sr-only">
-          Valutazione
-        </label>
+        onClick={(e) => {
+          // This makes the "propagation" of the click not work, so makes clicks inside of the
+          // modal not close him unless explicity asked.
+          e.stopPropagation()
+        }}
 
         <select
           id="rating"

@@ -1,5 +1,10 @@
 import { Plus } from 'phosphor-react'
+import { useState } from 'react'
+import { AddNewBook } from './components/AddNewBook'
+import { BookCard } from './components/BookCard'
+
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   return (
     <div className="max-w-7xl min-h-screen bg-slate-100 mx-auto px-2">
       <header className="grid grid-cols-2">
@@ -11,6 +16,9 @@ function App() {
           Add a book
         </button>
       </header>
+      {/* TODO: Search box */}
+      <BookCard />
+      {isModalOpen && <AddNewBook setIsModalOpen={setIsModalOpen} />}
     </div>
   )
 }

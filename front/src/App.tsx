@@ -6,12 +6,16 @@ import { BookCard } from './components/BookCard'
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   return (
-    <div className="max-w-7xl min-h-screen bg-slate-100 mx-auto px-2">
-      <header className="grid grid-cols-2">
-        <h1>Lo Scaffale</h1>
-        <button className="bg-fuchsia-400 justify-self-end w-40 h-14 rounded-lg flex justify-center items-center gap-2 font-bold text-gray-800">
+    <div className="max-w-7xl min-h-screen mx-auto px-2">
+      <header className="flex p-6 items-center">
+        <h1 className="mr-auto">Lo Scaffale</h1>
+
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="bg-lavender-blue-400 flex gap-2 rounded px-8 py-3 text-sm font-medium text-rich-black transition hover:scale-[1.02] hover:shadow-md ring-lavender-blue-800 focus:outline-none focus:ring active:bg-lavender-blue-800 justify-self-center"
+        >
           <span>
-            <Plus size={20} color="#1F2937" weight="bold" />
+            <Plus size={20} color="#011627" weight="bold" />
           </span>
           Add a book
         </button>
